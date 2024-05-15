@@ -8,7 +8,7 @@ from typing import Literal, Optional
 import librosa
 import torch
 import tyro
-from huggingface_hub import snapshot_download
+from huggingface_hub import snapshot_download, PyTorchModelHubMixin
 
 from fam.llm.adapters import FlattenedInterleavedEncodec2Codebook
 from fam.llm.decoders import EncodecDecoder
@@ -35,7 +35,7 @@ from fam.telemetry.posthog import PosthogClient
 posthog = PosthogClient()  # see fam/telemetry/README.md for more information
 
 
-class TTS:
+class TTS(PyTorchModelHubMixin,repo_url="https://github.com/metavoiceio/metavoice-src",tags=["text-to-speech"]):
     END_OF_AUDIO_TOKEN = 1024
 
     def __init__(
